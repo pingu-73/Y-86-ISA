@@ -1,6 +1,6 @@
 module writeBack(
     input clock, cnd,
-    input [3:0] i_code, ra, rb,
+    input [3:0] in_code, ra, rb,
 
     input [63:0] val_e, val_m
 );
@@ -29,7 +29,7 @@ module writeBack(
 
     always@(negedge clock)
     begin
-        case(i_code)
+        case(in_code)
             4'd2: 
             begin
                 if (cnd == 1)
