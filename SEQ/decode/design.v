@@ -42,17 +42,12 @@ begin
     begin
         //no need
     end
-     if(in_code==4'd4)
-    begin
-        val_a=reg_chunk[ra];
-        val_b=reg_chunk[rb];
-    end
       if(in_code==4'd5)
     begin
         //val_a=reg_chunk[ra];
         val_b=reg_chunk[rb];
     end
-       if(in_code==4'd6)
+       if(in_code==4'd6 | in_code==4'd4)
     begin
         val_a=reg_chunk[ra];
         val_b=reg_chunk[rb];
@@ -66,19 +61,16 @@ begin
     begin
         val_b=reg_chunk[4];
     end
-    if(in_code==4'd9)
+    if(in_code==4'd9 | in_code==4'd10 | in_code==4'd11)
     begin
-        val_a=reg_chunk[4];
-         val_b=reg_chunk[4];
-    end
-    if(in_code==4'd11)
-    begin
-        val_a=reg_chunk[4];
-         val_b=reg_chunk[4];
-    end
-       if(in_code==4'd10)
-    begin
-        val_a=reg_chunk[ra];
+        if(in_code==4'd10)
+        begin
+            val_a=reg_chunk[ra];
+        end
+      else
+      begin
+          val_a=reg_chunk[4];
+      end
          val_b=reg_chunk[4];
     end
     end
