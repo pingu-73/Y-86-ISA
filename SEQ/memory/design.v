@@ -43,19 +43,22 @@ begin
     memory_chunk[23]=64'd48;
     memory_chunk[24]=64'd50;
     memory_chunk[25]=64'd52;
-
 end
-always@(posedge clock)
+always@(*)
 begin
+    if(clock==0)
+    begin
     bad_mem=1'b0;
     if(mem_add>64'd1023)
     begin
         bad_mem=1'b1;
     end
-    if(bad_mem==0)
+    end
+
+    else
     begin
         mem_add=val_e;
-          if(in_code==4'd11)
+          if(in_code==4'd11 | in_code==4'd9)
         begin
             val_m=memory_chunk[val_a];
             mem_add=val_a;
@@ -64,16 +67,7 @@ begin
         begin
             val_m=memory_chunk[val_e];
         end
-          if(in_code==4'd9)
-        begin
-            val_m=memory_chunk[val_a];
-             mem_add=val_a;
-        end
-        if(in_code==4'd10)
-        begin
-            memory_chunk[val_e]=val_a;
-        end
-         if(in_code==4'd4)
+        if(in_code==4'd10 | in_code==4'd4)
         begin
             memory_chunk[val_e]=val_a;
         end
@@ -83,6 +77,7 @@ begin
         end
         mem_data=memory_chunk[val_e];
     end
+
 end
 
 endmodule
