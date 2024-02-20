@@ -30,50 +30,49 @@ module writeBack(
     always@(negedge clock)
     begin
         case(in_code)
-            4'd2: //rrmovq and cmovXX
+            4'd2: 
             begin
                 if (cnd == 1)
-                begin // R[rb] ← val_e  
+                begin 
                     dst_e = rb;
                     Register_File[dst_e] = val_e;
                 end
             end
-            4'd3: //irmovq
-            begin // R[rb] ← val_e
+            4'd3: 
+            begin 
                 dst_e = rb;
                 Register_File[dst_e] = val_e;
             end
-            4'd5: //mrmovq
-            begin // R[ra] ← val_m
+            4'd5: 
+            begin 
                 dst_m = ra;
                 Register_File[dst_m] = val_m;
             end
-            4'd6: //Opq
-            begin // R[rb] ← val_e
+            4'd6: 
+            begin 
                 dst_e = rb;
                 Register_File[dst_e] = val_e;
             end
-            4'd8: //call
-            begin // R[ %rsp ] ← val_e
+            4'd8: 
+            begin 
                 dst_e = 4'd4;
                 Register_File[dst_e] = val_e;
             end
-            4'd9: //ret
-            begin // R[ %rsp ] ← val_e
+            4'd9: 
+            begin 
                 dst_e = 4'd4;
                 Register_File[dst_e] = val_e;
             end
-            4'd10: //pushq
-            begin // R[ %rsp ] ← val_e
+            4'd10:
+            begin
                 dst_e = 4'd4;
                 Register_File[dst_e] = val_e;
             end
-            4'd11: //popq
-            begin // R[ %rsp ] ← val_e
+            4'd11: 
+            begin
                 dst_e = 4'd4;
                 Register_File[dst_e] = val_e;
 
-                // R[ra] ← val_m
                 dst_m = ra;
                 Register_File[dst_m] = val_m;
             end
