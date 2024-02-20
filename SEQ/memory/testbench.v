@@ -4,7 +4,7 @@ module mem_tb;
   reg [63:0] val_p;
   reg [63:0] val_a;
   reg clock;
-  output bad_mem;
+  output bad_mem2;
   output [63:0] mem_add;
   output [63:0] val_m;
   output [63:0] mem_data;
@@ -15,7 +15,7 @@ module mem_tb;
     .val_p(val_p),
     .val_a(val_a),
     .clock(clock),
-    .bad_mem(bad_mem),
+    .bad_mem2(bad_mem2),
     .mem_add(mem_add),
     .val_m(val_m),
     .mem_data(mem_data)
@@ -62,8 +62,8 @@ module mem_tb;
   end
 
   initial begin
-    $monitor("clock=%d,Time=%0t, in_code=%d, val_e=%g, val_p=%g, val_a=%g, bad_mem=%g, mem_add=%g, val_m=%g, mem_data=%g",
-      clock,$time, in_code, val_e, val_p, val_a, bad_mem, mem_add, val_m, mem_data);
+    $monitor("clock=%d,Time=%0t, in_code=%d, val_e=%g, val_p=%g, val_a=%g, bad_mem2=%g, mem_add=%g, val_m=%g, mem_data=%g",
+      clock,$time, in_code, val_e, val_p, val_a, bad_mem2, mem_add, val_m, mem_data);
   end
 
 endmodule

@@ -18,32 +18,27 @@ begin
 end
 initial 
 begin
-    mem_chunk[0]=64'd2;
-    mem_chunk[1]=64'd4;
-    mem_chunk[2]=64'd6;
-    mem_chunk[3]=64'd8;
-    mem_chunk[4]=64'd10;
-    mem_chunk[5]=64'd12;
-    mem_chunk[6]=64'd14;
-    mem_chunk[7]=64'd16;
-    mem_chunk[8]=64'd18;
-    mem_chunk[9]=64'd20;
-    mem_chunk[10]=64'd22;
-    mem_chunk[11]=64'd24;
-    mem_chunk[12]=64'd26;
-    mem_chunk[13]=64'd28;
-    mem_chunk[14]=64'd30;
-    mem_chunk[15]=64'd32;
-    mem_chunk[16]=64'd34;
-    mem_chunk[17]=64'd36;
-    mem_chunk[18]=64'd38;
-    mem_chunk[19]=64'd40;
-    mem_chunk[20]=64'd42;
-    mem_chunk[21]=64'd48;
-    mem_chunk[22]=64'd50;
-    mem_chunk[23]=64'd52;
-    mem_chunk[24]=64'd54;
-    mem_chunk[25]=64'd56;
+    mem_chunk[0]=64'd0;
+    mem_chunk[1]=64'd1;
+    mem_chunk[2]=64'd2;
+    mem_chunk[3]=64'd3;
+    mem_chunk[4]=64'd4;
+    mem_chunk[5]=64'd5;
+    mem_chunk[6]=64'd6;
+    mem_chunk[7]=64'd7;
+    mem_chunk[8]=64'd8;
+    mem_chunk[9]=64'd9;
+    mem_chunk[10]=64'd10;
+    mem_chunk[11]=64'd11;
+    mem_chunk[12]=64'd12;
+    mem_chunk[13]=64'd13;
+    mem_chunk[14]=64'd14;
+    mem_chunk[15]=64'd15;
+    mem_chunk[16]=64'd16;
+    mem_chunk[17]=64'd17;
+    mem_chunk[18]=64'd18;
+    mem_chunk[19]=64'd19;
+    mem_chunk[20]=64'd20;
 end
 always@(*)
 begin
