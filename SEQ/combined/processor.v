@@ -160,6 +160,6 @@ end
         
     end
     initial begin
-        $monitor("clock=%d,  in_code=%b,  in_fun=%b, ra=%b,  rb=%b\n val_a=%g,  val_b=%g,  val_c=%g, val_e=%g, val_m=%g,  p_ctr_final=%g\n mem_data=%g,  mem_add=%g,  bad_mem=%g, invalid_ins=%b,  cnd=%d\n ", clock, in_code, in_fun, ra, rb, val_a, val_b, val_c, val_e, val_m, p_ctr_final, mem_data, mem_add, bad_mem, in_error, cnd);
+        $monitor("clock=%d,  in_code=%b,  in_fun=%b, ra=%b,  rb=%b\n val_a=%g,  val_b=%g,  val_c=%g, val_e=%g, val_m=%g,  p_ctr_final=%g\n mem_data=%g,  mem_add=%g,  bad_mem=%g, invalid_ins=%b,  cnd=%d, status_code=%b\n ", clock, in_code, in_fun, ra, rb, val_a, val_b, val_c, val_e, val_m, p_ctr_final, mem_data, mem_add, bad_mem, in_error, cnd,  en_coder);
     end
 endmodule
