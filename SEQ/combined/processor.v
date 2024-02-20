@@ -10,35 +10,26 @@
 
 
 module combined();
-    reg clock;
+   
     reg [63:0] p_ctr;
-    reg [3:0] status_code;
-
-    reg stat_AOK;
-    reg stat_INS;
-    reg stat_HLT;
-    reg stat_ADR;
-
+	 reg clock;
+    reg [3:0] en_coder;
     wire [3:0] in_code;
-    wire [3:0] in_fun;
-    wire [3:0] ra;
-    wire [3:0] rb;
-    wire signed [63:0] val_c;
-    wire [63:0] val_p;
-    wire signed [63:0] val_a;
-    wire signed [63:0] val_b;
+	 wire signed [63:0] val_b;
     wire [63:0] val_m;
-    wire [63:0] p_ctr_final;
-
-    wire bad_mem;
-    output flag_halt;
+    wire [3:0] in_fun;
+    wire signed [63:0] val_c;
+	wire flag_halt;
     wire in_error;
-    wire bad_mem2;
-    wire zroFlag, N, V, cnd;
+    wire [63:0] val_p;
+	 wire [3:0] ra;
+    wire [3:0] rb;
+    wire signed [63:0] val_a;
+	 wire zroFlag, N, V, cnd;
     wire signed [63:0] val_e, mem_data, mem_add;
-    
-    
-
+    wire [63:0] p_ctr_final;
+    wire bad_mem,bad_mem2;
+   
     fetch_seq dut_1 (
         .p_ctr(p_ctr),
         .clock(clock),
@@ -111,45 +102,35 @@ module combined();
     begin
         clock = 1;
         p_ctr = 64'd0;
-        stat_AOK = 1;
-        stat_INS = 0;
-        stat_HLT = 0;
-	stat_ADR = 0;
+       en_coder=4'd8;
     end
 
     always #8 clock =~ clock;
 
     always@(*)
     begin
+		if(in_error)
+        begin
+        en_coder=4'd4;
+        end
+		if(bad_mem2== 1)
+        begin
+        en_coder=4'd1;
+        $finish;
+        end
         if(flag_halt)
         begin
-        stat_AOK=1'b0;
-        stat_INS=1'b0;
-        stat_HLT=1'b1;
-        stat_ADR=1'b0;
-        // $finish;
+        en_coder=4'b0010;
+        $finish;
         end
-        else if(in_error)
+        if(bad_mem== 1)
         begin
-        stat_AOK=1'b0;
-        stat_INS=1'b1;
-        stat_HLT=1'b0;
-        stat_ADR=1'b0;
-        end
-        else if(bad_mem== 1 || bad_mem2 == 1)
-        begin
-        stat_AOK=1'b0;
-        stat_INS=1'b0;
-        stat_HLT=1'b0;
-        stat_ADR=1'b1;
-        // $finish;
+        en_coder=4'b0001;
+        $finish;
         end
         else
         begin
-        stat_AOK=1'b1;
-        stat_INS=1'b0;
-        stat_HLT=1'b0;
-        stat_ADR=1'b0;
+       en_coder=4'b1000;
         end
     end
 always@(*)
@@ -159,16 +140,26 @@ end
 
    always@(*)
     begin
-        if(stat_ADR == 1)
+        if(en_coder==4'b0010) 
         begin
             $finish;
         end
-        else if (stat_HLT == 1)
+        if(en_coder==4'b0011) begin
+            $finish;
+        end
+
+        if(en_coder==4'b0100 || en_coder==4'b0101 || en_coder==4'b1101 || en_coder==4'b0110 || en_coder==4'b0111 || en_coder==4'b1100 || en_coder==4'b1110 || en_coder==4'b1111)
         begin
             $finish;
         end
+        
+        
+        if(en_coder==4'b1010) begin
+            $finish;
+        end
+        
     end
     initial begin
-        $monitor("clock=%d,  in_code=%b,  in_fun=%b, ra=%b,  rb=%b\n val_a=%g,  val_b=%g,  val_c=%g, val_e=%g, val_m=%g,  p_ctr_final=%g\n mem_data=%g,  mem_add=%g,  bad_mem=%g, invalid_ins=%b,  cnd=%d,  halt=%d, stat_AOK=%d, stat_INS=%d, stat_ADR=%d\n ", clock, in_code, in_fun, ra, rb, val_a, val_b, val_c, val_e, val_m, p_ctr_final, mem_data, mem_add, bad_mem, in_error, cnd, stat_HLT, stat_AOK, stat_INS, stat_ADR);
+        $monitor("clock=%d,  in_code=%b,  in_fun=%b, ra=%b,  rb=%b\n val_a=%g,  val_b=%g,  val_c=%g, val_e=%g, val_m=%g,  p_ctr_final=%g\n mem_data=%g,  mem_add=%g,  bad_mem=%g, invalid_ins=%b,  cnd=%d\n ", clock, in_code, in_fun, ra, rb, val_a, val_b, val_c, val_e, val_m, p_ctr_final, mem_data, mem_add, bad_mem, in_error, cnd);
     end
 endmodule
