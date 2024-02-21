@@ -29,7 +29,7 @@ module combined();
     wire signed [63:0] val_e, mem_data, mem_add;
     wire [63:0] p_ctr_final;
     wire bad_mem,bad_mem2;
-   
+   wire [63:0] r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14;
     fetch_seq dut_1 (
         .p_ctr(p_ctr),
         .clock(clock),
@@ -54,7 +54,7 @@ module combined();
         .val_b(val_b),
         .val_a(val_a)
     );
-    exe dut_3(
+    execute dut_3(
         .in_code(in_code),
         .in_fun(in_fun),
         .val_a(val_a),
@@ -76,13 +76,13 @@ module combined();
         .val_m(val_m),
         .mem_data(mem_data)
     );
-    writeBack dut_5(
-        .clock(clock),
-        .cnd(cnd),
-        .in_code(in_code), 
-        .ra(ra), 
-        .rb(rb), 
-        .val_e(val_e), 
+       writeBack dut_5 (
+          .clock(clock),
+          .cnd(cnd),
+        .in_code(in_code),
+        .ra(ra),
+        .rb(rb),
+        .val_e(val_e),
         .val_m(val_m)
     );
     pc_update dut_6 (
@@ -104,21 +104,26 @@ module combined();
         p_ctr = 64'd0;
        en_coder=4'd8;
     end
+    
 
-    always #8 clock =~ clock;
+    initial begin
+    repeat (5)
+     #5 clock =~ clock;
+    end
 
     always@(*)
     begin
 		if(in_error)
         begin
         en_coder=4'd4;
+        $finish;
         end
 		if(bad_mem2== 1)
         begin
         en_coder=4'd1;
         $finish;
         end
-        if(flag_halt)
+        if(flag_halt==1)
         begin
         en_coder=4'b0010;
         $finish;
@@ -132,34 +137,35 @@ module combined();
         begin
        en_coder=4'b1000;
         end
+        //$finish;
     end
 always@(*)
 begin
 p_ctr=p_ctr_final;
 end
 
-   always@(*)
-    begin
-        if(en_coder==4'b0010) 
-        begin
-            $finish;
-        end
-        if(en_coder==4'b0011) begin
-            $finish;
-        end
+//    always@(*)
+//     begin
+//         if(en_coder==4'b0010) 
+//         begin
+//             $finish;
+//         end
+//         if(en_coder==4'b0011) begin
+//             $finish;
+//         end
 
-        if(en_coder==4'b0100 || en_coder==4'b0101 || en_coder==4'b1101 || en_coder==4'b0110 || en_coder==4'b0111 || en_coder==4'b1100 || en_coder==4'b1110 || en_coder==4'b1111)
-        begin
-            $finish;
-        end
+//         if(en_coder==4'b0100 || en_coder==4'b0101 || en_coder==4'b1101 || en_coder==4'b0110 || en_coder==4'b0111 || en_coder==4'b1100 || en_coder==4'b1110 || en_coder==4'b1111)
+//         begin
+//             $finish;
+//         end
         
         
-        if(en_coder==4'b1010) begin
-            $finish;
-        end
+//         if(en_coder==4'b1010) begin
+//             $finish;
+//         end
         
-    end
+//     end
     initial begin
-        $monitor("clock=%d,  in_code=%b,  in_fun=%b, ra=%b,  rb=%b\n val_a=%g,  val_b=%g,  val_c=%g, val_e=%g, val_m=%g,  p_ctr_final=%g\n mem_data=%g,  mem_add=%g,  bad_mem=%g, invalid_ins=%b,  cnd=%d, status_code=%b\n ", clock, in_code, in_fun, ra, rb, val_a, val_b, val_c, val_e, val_m, p_ctr_final, mem_data, mem_add, bad_mem, in_error, cnd,  en_coder);
+        $monitor("clock=%d,  in_code=%b,  in_fun=%b, ra=%b,  rb=%b\n val_a=%g,  val_b=%g,  val_c=%g, val_e=%g, val_m=%g,  p_ctr_final=%g\n mem_data=%g,  mem_add=%g,  bad_mem=%g, invalid_ins=%b,  cnd=%d,flag_halt=%b\n ", clock, in_code, in_fun, ra, rb, val_a, val_b, val_c, val_e, val_m, p_ctr_final, mem_data, mem_add, bad_mem, in_error, cnd,flag_halt);
     end
 endmodule
