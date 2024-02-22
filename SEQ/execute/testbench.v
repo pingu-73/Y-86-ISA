@@ -5,7 +5,7 @@ module execute_tb;
     reg [63:0] val_a, val_b, val_c;
     reg clock;
 
-    output signed [63:0] val_e;
+    output [63:0] val_e;
     output cnd;
 
     exe dut(
@@ -20,38 +20,49 @@ module execute_tb;
         .cnd(cnd)
     );
 
-
-    initial begin
-        clock=0;
-        in_code=4'd0;
-        in_fun=4'd0;
-        val_c=64'd0;
-        val_a=64'd0;
-        val_b=64'd0;    
-
+ initial
+    begin
+        clock = 0;
+        repeat (16)  
+        #10 clock = ~clock;
     end
 
     initial begin
         clock=0;
-
-        #10 clock=~clock;
-
-        in_code=4'b0101; in_fun=4'b0100; val_a=64'd10; val_b=64'd50; val_c=64'd20;        
-
-        #10 clock=~clock;
-        #10 clock=~clock;
-
-        in_code=4'b0110; in_fun=4'b0001; val_a=64'd10; val_b=64'd50; val_c=64'd20;
-
-        #10 clock=~clock;
-        #10 clock=~clock;
-
-        in_code=4'b0010; in_fun=4'b0000; val_a=64'd10; val_b=64'd50; val_c=64'd20;
-        #10 clock=~clock;   
+    end
+    initial begin
+        #10 
+        in_code=4'b0101; 
+        in_fun=4'b0100; 
+        val_a=64'd10; 
+        val_b=64'd41; 
+        val_c=64'd23;        
+        #20
+        in_code=4'b0110; 
+        val_a=64'd13; 
+        #20
+        in_fun=4'b0000; 
+        val_c=64'd117;
+           #20
+        val_a=64'd73; 
+        val_b=64'd74; 
+           #20
+        in_code=4'b0010; 
+        val_a=64'd14; 
+        val_c=64'd19;
+           #20
+        val_b=64'd91; 
+           #20
+        in_code=4'b0011; 
+           #20
+        val_a=64'd101; 
+        val_b=64'd111; 
+        val_c=64'd121;
+         
     end 
   
     initial begin
-		$monitor("clock=%d\t in_code=%b\t in_fun=%b\t val_a=%d\t val_b=%d\t val_c=%d\t val_e=%d\t cnd=%d\n",clock,in_code,in_fun,val_a,val_b,val_c,val_e, cnd);
+		$monitor("clock=%d\t in_fun=%b\t in_code=%b\t val_b=%d\t val_c=%d\t val_a=%d\t cnd=%d\t val_e=%d\n",clock,in_fun,in_code,val_b,val_c,val_a,cnd, val_e);
     end
 
     initial begin
