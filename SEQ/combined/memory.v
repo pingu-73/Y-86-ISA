@@ -9,7 +9,7 @@ output reg [63:0] mem_add,
 output reg [63:0] val_m,
 output reg [63:0] mem_data
 );
-reg [63:0] mem_chunk[1023:0];
+reg [63:0] mem_chunk[0:1023];
 initial
 begin
     val_m = 64'd0;
@@ -41,44 +41,32 @@ begin
     mem_chunk[20]=64'd20;
 end
 always@(*)
-begin
-    
+begin    
 
-    if(clock==1)
-    begin
-        
           if(in_code==4'd11 | in_code==4'd9)
         begin
             val_m=mem_chunk[val_a];
             mem_add=val_a;
+            bad_mem2=0;
         end
           if(in_code==4'd5)
         begin
             val_m=mem_chunk[val_e];
             mem_add=val_e;
+             bad_mem2=0;
         end
         if(in_code==4'd10 | in_code==4'd4)
         begin
             mem_chunk[val_e]=val_a;
             mem_add=val_e;
+             bad_mem2=0;
         end
         if(in_code==4'd8)
         begin
             mem_chunk[val_e]=val_p;
             mem_add=val_e;
+             bad_mem2=0;
         end
         mem_data=mem_chunk[val_e];
     end
-
-    else
-    begin
-    bad_mem2=1'b0;
-    if(mem_add>64'd1023)
-    begin
-        bad_mem2=1'b1;
-    end
-    end
-
-end
-
 endmodule

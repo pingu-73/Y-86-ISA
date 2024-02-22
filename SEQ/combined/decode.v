@@ -9,23 +9,15 @@ module decode_proc(
     output reg [63:0] val_b,
     output reg [63:0] val_a 
 );
-reg cnd;
 reg [63:0] reg_chunk [0:14];
-initial begin
-    cnd=1'd1;
-end
 always @(posedge clock)
 begin
-    $readmemh("input.txt",reg_chunk);
+ $readmemh("common.txt",reg_chunk,0,14);
 end
 always @(*)
 begin
-    if(clock==0)
-    begin
-        cnd=1'd0;
-    end
-    else
-    begin
+if(clock==1)
+begin
     if(in_code==4'd0)
     begin
         //no need 
@@ -73,8 +65,6 @@ begin
       end
          val_b=reg_chunk[4];
     end
-    end
 end
-
-
+    end
 endmodule

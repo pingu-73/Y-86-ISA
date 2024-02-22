@@ -54,7 +54,7 @@ module combined();
         .val_b(val_b),
         .val_a(val_a)
     );
-    execute dut_3(
+    exe dut_3(
         .in_code(in_code),
         .in_fun(in_fun),
         .val_a(val_a),
@@ -137,34 +137,30 @@ module combined();
         begin
        en_coder=4'b1000;
         end
-        //$finish;
     end
 always@(*)
 begin
 p_ctr=p_ctr_final;
 end
 
-//    always@(*)
-//     begin
-//         if(en_coder==4'b0010) 
-//         begin
-//             $finish;
-//         end
-//         if(en_coder==4'b0011) begin
-//             $finish;
-//         end
+   always@(*)
+    begin
+        if(en_coder==4'b0010) 
+        begin
+            $finish;
+        end
+        if(en_coder==4'b0011) begin
+            $finish;
+        end
 
-//         if(en_coder==4'b0100 || en_coder==4'b0101 || en_coder==4'b1101 || en_coder==4'b0110 || en_coder==4'b0111 || en_coder==4'b1100 || en_coder==4'b1110 || en_coder==4'b1111)
-//         begin
-//             $finish;
-//         end
-        
-        
-//         if(en_coder==4'b1010) begin
-//             $finish;
-//         end
-        
-//     end
+        if(en_coder==4'b0100 || en_coder==4'b0101 || en_coder==4'b1101 || en_coder==4'b0110 || en_coder==4'b0111 || en_coder==4'b1100 || en_coder==4'b1110 || en_coder==4'b1111)
+        begin
+            $finish;
+        end
+        if(en_coder==4'b1010) begin
+             $finish;
+         end
+    end    
     initial begin
         $monitor("clock=%d,  in_code=%b,  in_fun=%b, ra=%b,  rb=%b\n val_a=%g,  val_b=%g,  val_c=%g, val_e=%g, val_m=%g,  p_ctr_final=%g\n mem_data=%g,  mem_add=%g,  bad_mem=%g, invalid_ins=%b,  cnd=%d,flag_halt=%b\n ", clock, in_code, in_fun, ra, rb, val_a, val_b, val_c, val_e, val_m, p_ctr_final, mem_data, mem_add, bad_mem, in_error, cnd,flag_halt);
     end

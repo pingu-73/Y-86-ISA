@@ -31,97 +31,11 @@ module fetch_seq(
     end
    initial 
    begin
-       memory_chunk[0]=8'b00110000; 
-    memory_chunk[1]=8'b00000000; 
-    memory_chunk[2]=8'b00000000;           
-    memory_chunk[3]=8'b00000000;           
-    memory_chunk[4]=8'b00000000;           
-    memory_chunk[5]=8'b00000000;           
-    memory_chunk[6]=8'b00000000;           
-    memory_chunk[7]=8'b00000000;           
-    memory_chunk[8]=8'b00000000;          
-    memory_chunk[9]=8'b00000000; 
-    memory_chunk[10]=8'b00110000; 
-    memory_chunk[11]=8'b00000010; 
-    memory_chunk[12]=8'b00000000;           
-    memory_chunk[13]=8'b00000000;           
-    memory_chunk[14]=8'b00000000;           
-    memory_chunk[15]=8'b00000000;           
-    memory_chunk[16]=8'b00000000;           
-    memory_chunk[17]=8'b00000000;           
-    memory_chunk[18]=8'b00000000;          
-    memory_chunk[19]=8'b00010000; 
-    memory_chunk[20]=8'b00110000; 
-    memory_chunk[21]=8'b00000011; 
-    memory_chunk[22]=8'b00000000;           
-    memory_chunk[23]=8'b00000000;           
-    memory_chunk[24]=8'b00000000;           
-    memory_chunk[25]=8'b00000000;           
-    memory_chunk[26]=8'b00000000;           
-    memory_chunk[27]=8'b00000000;           
-    memory_chunk[28]=8'b00000000;          
-    memory_chunk[29]=8'b00001100; 
-    memory_chunk[30]=8'b01110000; 
-    memory_chunk[31]=8'b00000000; 
-    memory_chunk[32]=8'b00000000; 
-    memory_chunk[33]=8'b00000000; 
-    memory_chunk[34]=8'b00000000; 
-    memory_chunk[35]=8'b00000000; 
-    memory_chunk[36]=8'b00000000; 
-    memory_chunk[37]=8'b00000000; 
-    memory_chunk[38]=8'b00100111;
-        memory_chunk[39]=8'b01100000; 
-        memory_chunk[40]=8'b00000011; 
-        memory_chunk[41]=8'b01110011; 
-        memory_chunk[42]=8'b00000000; 
-        memory_chunk[43]=8'b00000000; 
-        memory_chunk[44]=8'b00000000; 
-        memory_chunk[45]=8'b00000000; 
-        memory_chunk[46]=8'b00000000; 
-        memory_chunk[47]=8'b00000000; 
-        memory_chunk[48]=8'b00000000; 
-        memory_chunk[49]=8'b01111010;
-        memory_chunk[50]=8'b01100000; 
-        memory_chunk[51]=8'b00000010; 
-        memory_chunk[52]=8'b01110011; 
-        memory_chunk[53]=8'b00000000; 
-        memory_chunk[54]=8'b00000000; 
-        memory_chunk[55]=8'b00000000; 
-        memory_chunk[56]=8'b00000000; 
-        memory_chunk[57]=8'b00000000; 
-        memory_chunk[58]=8'b00000000; 
-        memory_chunk[59]=8'b00000000; 
-        memory_chunk[60]=8'b01111101;
-        memory_chunk[61]=8'b01110000; 
-        memory_chunk[62]=8'b00000000; 
-        memory_chunk[63]=8'b00000000; 
-        memory_chunk[64]=8'b00000000; 
-        memory_chunk[65]=8'b00000000; 
-        memory_chunk[66]=8'b00000000; 
-        memory_chunk[67]=8'b00000000; 
-        memory_chunk[68]=8'b00000000; 
-        memory_chunk[69]=8'b01000110; 
-        memory_chunk[70]=8'b00000000;  
-    memory_chunk[71]=8'b00000000; 
-    memory_chunk[72]=8'b00000000;           
-    memory_chunk[73]=8'b00000000;           
-    memory_chunk[74]=8'b00000000;           
-    memory_chunk[75]=8'b00000000;           
-    memory_chunk[76]=8'b00000000;           
-    memory_chunk[77]=8'b00000000;           
-    memory_chunk[78]=8'b00000000;          
-    memory_chunk[79]=8'b00000000; 
-    memory_chunk[80]=8'b00110000; 
-    memory_chunk[81]=8'b00000010; 
-    memory_chunk[82]=8'b00000000;           
-    memory_chunk[83]=8'b00000000;           
-    memory_chunk[84]=8'b00000000;           
-    memory_chunk[85]=8'b00000000;           
-    memory_chunk[86]=8'b00000000;  
+      $readmemb("i.txt",memory_chunk,0,1);
    end
         always@(posedge clock)
         begin
-        if(p_ctr>64'd1023)
+        if(p_ctr>64'd2)
         begin
             bad_mem=1'd1;
         end
@@ -144,8 +58,8 @@ module fetch_seq(
             begin
                 in_error=1'd1;
             end
-            if(in_error==0)
-            begin
+            // if(in_error==0)
+            // begin
                if(in_code==4'd0)
                begin
                 val_p=p_ctr+64'd1;
@@ -167,7 +81,10 @@ module fetch_seq(
                if(in_code==4'd4)
                begin
                   ra=instruction_arr[8:11];
-                  val_c=instruction_arr[16:79];
+                  val_c={instruction_arr[72:79],instruction_arr[64:71],
+                  instruction_arr[56:63],instruction_arr[48:55],
+                  instruction_arr[40:47],instruction_arr[32:39],
+                  instruction_arr[24:31],instruction_arr[16:23]};
                   val_p=p_ctr+64'd10;
                   rb=instruction_arr[12:15];
                   flag_halt=0;
@@ -182,7 +99,10 @@ module fetch_seq(
                  if(in_code==4'd5)
                begin
                   ra=instruction_arr[8:11];
-                     val_c=instruction_arr[16:79];
+                  val_c={instruction_arr[72:79],instruction_arr[64:71],
+                  instruction_arr[56:63],instruction_arr[48:55],
+                  instruction_arr[40:47],instruction_arr[32:39],
+                  instruction_arr[24:31],instruction_arr[16:23]};
                   val_p=p_ctr+64'd10;
                   rb=instruction_arr[12:15];
                   flag_halt=0;
@@ -190,7 +110,10 @@ module fetch_seq(
                 if(in_code==4'd3)
                begin
                  ra=instruction_arr[8:11];
-                    val_c=instruction_arr[16:79];
+                 val_c={instruction_arr[72:79],instruction_arr[64:71],
+                  instruction_arr[56:63],instruction_arr[48:55],
+                  instruction_arr[40:47],instruction_arr[32:39],
+                  instruction_arr[24:31],instruction_arr[16:23]};
                  val_p=p_ctr+64'd10;
                  rb=instruction_arr[12:15];
                  flag_halt=0;
@@ -206,7 +129,10 @@ module fetch_seq(
               
                  if(in_code==4'd8)
                begin
-                      val_c=instruction_arr[8:71];
+                      val_c={instruction_arr[64:71],
+                  instruction_arr[56:63],instruction_arr[48:55],
+                  instruction_arr[40:47],instruction_arr[32:39],
+                  instruction_arr[24:31],instruction_arr[16:23],instruction_arr[8:15]};
                   val_p=p_ctr+64'd9;
                   flag_halt=0;
                end
@@ -218,7 +144,10 @@ module fetch_seq(
                   if(in_code==4'd7)
                begin
                  val_p=p_ctr+64'd9;
-                 val_c=instruction_arr[8:71];
+               val_c={instruction_arr[64:71],
+                  instruction_arr[56:63],instruction_arr[48:55],
+                  instruction_arr[40:47],instruction_arr[32:39],
+                  instruction_arr[24:31],instruction_arr[16:23],instruction_arr[8:15]};
                  flag_halt=0;
                end
                if(in_code==4'd11)
@@ -229,7 +158,7 @@ module fetch_seq(
                   flag_halt=0;
                end
 
-            end
+            // end
         end
         end
 endmodule

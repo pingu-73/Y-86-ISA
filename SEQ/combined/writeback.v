@@ -10,14 +10,14 @@ module writeBack(
 
     always@(*) begin
         if(clock==1)
-            $readmemh("input.txt", reg_chunk);
+            $readmemh("common.txt", reg_chunk);
         
     end
 
     always@(*) begin
         if(clock == 0)
         begin
-            $writememh("input.txt", reg_chunk);
+            $writememh("common.txt", reg_chunk);
         end
     end
 
