@@ -105,16 +105,15 @@ module combined();
        en_coder=4'd8;
     end
 
-    initial begin
-    repeat (5)
-     #5 clock =~ clock;
-    end
+    
+    always #5 clock =~ clock;
 
     always@(*)
     begin
 		if(in_error)
         begin
         en_coder=4'd4;
+        $finish;
         end
 		if(bad_mem2== 1)
         begin
