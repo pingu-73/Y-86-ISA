@@ -29,7 +29,7 @@ module combined();
     wire signed [63:0] val_e, mem_data, mem_add;
     wire [63:0] p_ctr_final;
     wire bad_mem,bad_mem2;
-   wire [63:0] r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14;
+   
     fetch_seq dut_1 (
         .p_ctr(p_ctr),
         .clock(clock),
@@ -76,13 +76,13 @@ module combined();
         .val_m(val_m),
         .mem_data(mem_data)
     );
-       writeBack dut_5 (
-          .clock(clock),
-          .cnd(cnd),
-        .in_code(in_code),
-        .ra(ra),
-        .rb(rb),
-        .val_e(val_e),
+    writeBack dut_5(
+        .clock(clock),
+        .cnd(cnd),
+        .in_code(in_code), 
+        .ra(ra), 
+        .rb(rb), 
+        .val_e(val_e), 
         .val_m(val_m)
     );
     pc_update dut_6 (
@@ -104,12 +104,9 @@ module combined();
         p_ctr = 64'd0;
        en_coder=4'd8;
     end
-    
 
-    initial begin
-    repeat (5)
-     #5 clock =~ clock;
-    end
+    
+    always #5 clock =~ clock;
 
     always@(*)
     begin
@@ -123,7 +120,7 @@ module combined();
         en_coder=4'd1;
         $finish;
         end
-        if(flag_halt==1)
+        if(flag_halt)
         begin
         en_coder=4'b0010;
         $finish;
@@ -157,11 +154,14 @@ end
         begin
             $finish;
         end
+        
+        
         if(en_coder==4'b1010) begin
-             $finish;
-         end
-    end    
+            $finish;
+        end
+        
+    end
     initial begin
-        $monitor("clock=%d,  in_code=%b,  in_fun=%b, ra=%b,  rb=%b\n val_a=%g,  val_b=%g,  val_c=%g, val_e=%g, val_m=%g,  p_ctr_final=%g\n mem_data=%g,  mem_add=%g,  bad_mem=%g, invalid_ins=%b,  cnd=%d,flag_halt=%b\n ", clock, in_code, in_fun, ra, rb, val_a, val_b, val_c, val_e, val_m, p_ctr_final, mem_data, mem_add, bad_mem, in_error, cnd,flag_halt);
+        $monitor("clock=%d,  in_code=%b,  in_fun=%b, ra=%b,  rb=%b\n val_a=%g,  val_b=%g,  val_c=%g, val_e=%g, val_m=%g,  p_ctr_final=%g\n mem_data=%g,  mem_add=%g,  bad_mem=%g, invalid_ins=%b,  cnd=%d\n ", clock, in_code, in_fun, ra, rb, val_a, val_b, val_c, val_e, val_m, p_ctr_final, mem_data, mem_add, bad_mem, in_error, cnd);
     end
 endmodule
