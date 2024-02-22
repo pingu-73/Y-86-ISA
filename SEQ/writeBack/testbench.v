@@ -1,4 +1,4 @@
-module write_back_tb();
+module write_back_test();
     reg clock, cnd;
     reg [63:0] val_m;
     reg [3:0] in_code, ra, rb;
