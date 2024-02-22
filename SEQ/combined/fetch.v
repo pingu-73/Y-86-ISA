@@ -31,11 +31,11 @@ module fetch_seq(
     end
    initial 
    begin
-      $readmemb("i.txt",memory_chunk,0,1);
+      $readmemb("i.txt",memory_chunk,0,21);
    end
         always@(posedge clock)
         begin
-        if(p_ctr>64'd2)
+        if(p_ctr>64'd21)
         begin
             bad_mem=1'd1;
         end
