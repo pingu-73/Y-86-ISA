@@ -105,7 +105,10 @@ module combined();
        en_coder=4'd8;
     end
 
-    always #8 clock =~ clock;
+    initial begin
+    repeat (5)
+     #5 clock =~ clock;
+    end
 
     always@(*)
     begin
