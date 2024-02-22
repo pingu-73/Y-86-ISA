@@ -29,6 +29,8 @@ module execute_tb;
 
     initial begin
         clock=0;
+        in_code = 4'd0;
+        in_fun = 4'd0;
     end
     initial begin
         #10 
@@ -62,7 +64,7 @@ module execute_tb;
     end 
   
     initial begin
-		$monitor("clock=%d\t in_fun=%b\t in_code=%b\t val_b=%d\t val_c=%d\t val_a=%d\t cnd=%d\t val_e=%d\n",clock,in_fun,in_code,val_b,val_c,val_a,cnd, val_e);
+		$monitor("clock=%d\t in_fun=%b\t in_code=%b\t val_b=%g\t val_c=%g\t val_a=%g\t cnd=%d\t val_e=%g\n",clock,in_fun,in_code,val_b,val_c,val_a,cnd, val_e);
     end
 
     initial begin

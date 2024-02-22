@@ -15,6 +15,7 @@ begin
     val_m = 64'd0;
     mem_add=64'd0;
     mem_data=64'd0;
+    bad_mem2 = 0;
 end
 initial 
 begin

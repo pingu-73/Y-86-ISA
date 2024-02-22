@@ -26,11 +26,13 @@ module exe(
         V = 0;
 	end
 
-    always@(posedge clock)
+    always@(*)
     begin 
-		V = cond[0];
-        N = cond[1];
-        zroFlag = cond[2];
+		if (clock == 1) begin
+			V = cond[0];
+			N = cond[1];
+			zroFlag = cond[2];
+		end
     end
 
     ALU uut(A, B, ctrl, ans, cond);
