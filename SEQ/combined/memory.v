@@ -43,7 +43,8 @@ begin
 end
 always@(*)
 begin    
-
+          if(clock==1)
+          begin
           if(in_code==4'd11 | in_code==4'd9)
         begin
             val_m=mem_chunk[val_a];
@@ -69,5 +70,15 @@ begin
              bad_mem2=0;
         end
         mem_data=mem_chunk[val_e];
+          end
+
+          
+          else
+          begin
+            if(mem_add>64'd1023)
+            begin
+                bad_mem2=1;
+            end
+          end
     end
 endmodule
