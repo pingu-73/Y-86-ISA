@@ -35,7 +35,7 @@ module fetch_seq(
    end
         always@(posedge clock)
         begin
-        if(p_ctr>64'd21)
+        if(p_ctr>64'd1023)
         begin
             bad_mem=1'd1;
         end
@@ -50,14 +50,6 @@ module fetch_seq(
              };
               in_fun=instruction_arr[4:7];
             in_code=instruction_arr[0:3];
-            if(in_code>4'd11)
-            begin
-                in_error=1'd1;
-            end
-            if(in_code<4'd0)
-            begin
-                in_error=1'd1;
-            end
             // if(in_error==0)
             // begin
                if(in_code==4'd0)
@@ -65,12 +57,12 @@ module fetch_seq(
                 val_p=p_ctr+64'd1;
                 flag_halt=1;
                end       
-               if(in_code==4'd1)
+               else if(in_code==4'd1)
                begin
                  val_p=p_ctr+64'd1;
                  flag_halt=0;
                end
-               if(in_code==4'd2)
+               else if(in_code==4'd2)
                begin
                  ra=instruction_arr[8:11];
                  val_p=p_ctr+64'd2;
@@ -78,7 +70,7 @@ module fetch_seq(
                  flag_halt=0;
                end
               
-               if(in_code==4'd4)
+               else if(in_code==4'd4)
                begin
                   ra=instruction_arr[8:11];
                   val_c={instruction_arr[72:79],instruction_arr[64:71],
@@ -89,14 +81,14 @@ module fetch_seq(
                   rb=instruction_arr[12:15];
                   flag_halt=0;
                end
-               if(in_code==4'd10)
+               else if(in_code==4'd10)
                begin
                   ra=instruction_arr[8:11];
                   val_p=p_ctr+64'd2;
                   rb=instruction_arr[12:15];
                   flag_halt=0;
                end
-                 if(in_code==4'd5)
+                 else if(in_code==4'd5)
                begin
                   ra=instruction_arr[8:11];
                   val_c={instruction_arr[72:79],instruction_arr[64:71],
@@ -107,7 +99,7 @@ module fetch_seq(
                   rb=instruction_arr[12:15];
                   flag_halt=0;
                end
-                if(in_code==4'd3)
+                else if(in_code==4'd3)
                begin
                  ra=instruction_arr[8:11];
                  val_c={instruction_arr[72:79],instruction_arr[64:71],
@@ -118,7 +110,7 @@ module fetch_seq(
                  rb=instruction_arr[12:15];
                  flag_halt=0;
                end
-                 if(in_code==4'd6)
+                 else if(in_code==4'd6)
                begin
                   ra=instruction_arr[8:11];
                   //val_c=instruction_arr[16:79];
@@ -127,7 +119,7 @@ module fetch_seq(
                   flag_halt=0;
                end
               
-                 if(in_code==4'd8)
+                 else if(in_code==4'd8)
                begin
                       val_c={instruction_arr[64:71],
                   instruction_arr[56:63],instruction_arr[48:55],
@@ -136,12 +128,12 @@ module fetch_seq(
                   val_p=p_ctr+64'd9;
                   flag_halt=0;
                end
-                if(in_code==4'd9)
+                else if(in_code==4'd9)
                begin
                   val_p=p_ctr+64'd1;
                   flag_halt=0;
                end
-                  if(in_code==4'd7)
+                  else if(in_code==4'd7)
                begin
                  val_p=p_ctr+64'd9;
                val_c={instruction_arr[64:71],
@@ -150,12 +142,16 @@ module fetch_seq(
                   instruction_arr[24:31],instruction_arr[16:23],instruction_arr[8:15]};
                  flag_halt=0;
                end
-               if(in_code==4'd11)
+               else if(in_code==4'd11)
                begin
                   ra=instruction_arr[8:11];
                   val_p=p_ctr+64'd2;
                   rb=instruction_arr[12:15];
                   flag_halt=0;
+               end
+               else
+               begin
+                  in_error=1;
                end
 
             // end
