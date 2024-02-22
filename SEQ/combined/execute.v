@@ -87,10 +87,10 @@ module exe(
 					val_e = ans;
 					cndsn_code = cond;
 				end
-				4'd8: val_e = val_b;
-				4'd10: val_e = val_b;
-				4'd9: val_e = val_b;
-				4'd11: val_e = val_b;
+				4'd8: val_e = -64'd1+val_b;
+				4'd9: val_e = 64'd1+val_b;
+				4'd10: val_e = -64'd1+val_b;
+				4'd11: val_e = 64'd1+val_b;
 			endcase
 		end
 	end
