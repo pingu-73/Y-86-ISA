@@ -162,6 +162,6 @@ end
         
     end
     initial begin
-        $monitor("clock=%d,  in_code=%b,  in_fun=%b, ra=%b,  rb=%b\n val_a=%g,  val_b=%g,  val_c=%g, val_e=%g, val_m=%g,  p_ctr_final=%g\n mem_data=%g,  mem_add=%g,  bad_mem=%d, bad_mem2=%d, invalid_ins=%b, flag_halt=%b, cnd=%d\n ", clock, in_code, in_fun, ra, rb, val_a, val_b, val_c, val_e, val_m, p_ctr_final, mem_data, mem_add, bad_mem, bad_mem2, in_error, flag_halt, cnd);
+        $monitor("clock=%d,  in_code=%b, \t  in_fun=%b, \t ra=%b, \t rb=%b \n val_a=%g, \t val_b=%g, \t val_c=%g, \t val_e=%g, \t val_m=%g, \t p_ctr_final=%g\n mem_data=%g, \t mem_add=%g, \n bad_mem=%d, \t bad_mem2=%d, \t invalid_ins=%b, \t flag_halt=%b, \n cnd=%d\n -------------------------------------", clock, in_code, in_fun, ra, rb, val_a, val_b, val_c, val_e, val_m, p_ctr_final, mem_data, mem_add, bad_mem, bad_mem2, in_error, flag_halt, cnd);
     end
 endmodule
