@@ -22,7 +22,7 @@ begin
  
     mem_add=64'd0;
 end
-reg [63:0] mem_data_chunk[1023:0];
+reg [63:0] mem_data_chunk[4095:0];
 initial 
 begin
     mem_data_chunk[0]=64'd2;
@@ -89,7 +89,7 @@ begin
 end
 always@(*)
 begin
-    if( mem_add<0 | mem_add>64'd1023)
+    if( mem_add<0 | mem_add>64'd4095)
     begin
         mem_error_data=1;
     end

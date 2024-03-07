@@ -25,7 +25,7 @@ reg [3:0] in_fun;
 reg [63:0] val_c;
 reg [3:0] ra;
 reg mem_error_fetch;
-reg [7:0] mem_data_chunk [0:1023];
+reg [7:0] mem_data_chunk [0:4095];
 reg [3:0] in_code;
 reg [63:0] val_p;
 reg [63:0] p_ctr;
@@ -34,7 +34,7 @@ reg [63:0] holder;
 
 initial 
 begin
-   $readmemb("i.txt",mem_data_chunk,0,21);
+   $readmemb("i.txt",mem_data_chunk,0,22);
 end
 initial begin
    stat=2'b00;
@@ -72,7 +72,7 @@ begin
 end
 always@(*)
 begin
-    if(p_ctr<0 | p_ctr>64'd1023)
+    if(p_ctr<0 | p_ctr>64'd4095)
         begin
             stat=2'b10;
             mem_error_fetch=1'b1;
